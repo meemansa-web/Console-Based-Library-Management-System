@@ -9,6 +9,7 @@ public class Main {
     	System.out.println("Working Directory: " + System.getProperty("user.dir"));
     	Library  library=new Library();
     	library.setBooks(FileHandler.loadBooks());
+    	library.setMembers(FileHandler.loadMembers());
     	Scanner sc=new Scanner(System.in);
     	while(true) {
     		System.out.println("\n===Library Managment System===");
@@ -19,7 +20,7 @@ public class Main {
     		System.out.println("5. Display Book");
     		System.out.println("6. Remove Book");
     		System.out.println("7. Show Statistics");
-    		System.out.println("9. Export Books to CSV");
+    		System.out.println("8. Export Books to CSV");
     		System.out.println("0. Exit");
     		
     		System.out.println("Enter your choice :");
@@ -47,6 +48,7 @@ public class Main {
                  String name = sc.nextLine();
 
                  library.addMember(new Member(id, name));
+                 FileHandler.saveMembers(library.getMembers());
                  
                  break;
                  

@@ -36,4 +36,8 @@ public class Member {
     public LocalDate returnBook(String isbn) {
         return borrowedBooks.remove(isbn);
     }
+    @Override
+    public String toString() {
+        return memberId + "," + name + "," + borrowedBooks.keySet();
+    }
 }

@@ -17,6 +17,22 @@ public class FileHandler {
 			System.out.println("Error saving Book..!");
 		}	
 	}
+	public static void saveMembers(ArrayList<Member> members) {
+
+	    try (BufferedWriter writer = new BufferedWriter(new FileWriter("members.txt"))) {
+
+	        for (Member m : members) {
+	            writer.write(m.getId() + "," + m.getName());
+	            writer.newLine();
+	        }
+
+	        System.out.println("✅ Members saved successfully!");
+
+	    } catch (IOException e) {
+	        System.out.println("❌ Error saving members!");
+	        e.printStackTrace();
+	    }
+	}
 	public static void exportBooksToCSV(ArrayList<Book> books) {
 
 	    try (BufferedWriter writer = new BufferedWriter(new FileWriter("books.csv"))) {
@@ -59,5 +75,23 @@ public class FileHandler {
 			System.out.println("No previous data Found");
 		}
 		return books;
+	}
+	public static ArrayList<Member> loadMembers() {
+	    ArrayList<Member> members = new ArrayList<>();
+
+	    try (BufferedReader reader = new BufferedReader(new FileReader("members.txt"))) {
+
+	        String line;
+	        while ((line = reader.readLine()) != null) {
+	            String[] data = line.split(",");
+
+	            members.add(new Member(data[0], data[1]));
+	        }
+
+	    } catch (IOException e) {
+	        System.out.println("No previous member data found.");
+	    }
+
+	    return members;
 	}
 }

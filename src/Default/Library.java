@@ -15,6 +15,13 @@ public class Library {
      public ArrayList<Book> getBooks() {
          return books;
      }
+     public ArrayList<Member> getMembers() {
+    	    return members;
+    	}
+
+    	public void setMembers(ArrayList<Member> members) {
+    	    this.members = members;
+    	}
      //Add Book
      public void addBook(Book book) {
     	 books.add(book);
@@ -103,7 +110,7 @@ public class Library {
          if (days > allowedDays) {
              long extraDays = days - allowedDays;
              long fine = extraDays * finePerDay;
-
+             System.out.println("Book returned by " + member.getName() + " (ID: " + member.getId() + ")");
              System.out.println("Book returned!");
              System.out.println("⚠ Overdue by " + extraDays + " days");
              System.out.println("💰 Fine: ₹" + fine);
@@ -113,17 +120,33 @@ public class Library {
      }
      
      //Display Books
-     public void displayBook() {
+       public void displayBook() {
+
     	    if (books.isEmpty()) {
     	        System.out.println("No books available!");
     	        return;
     	    }
 
     	    for (Book b : books) {
+
+    	        String borrowerInfo = "Available";
+
+    	        if (!b.isAvailaable()) {
+
+    	            for (Member m : members) {
+    	                if (m.getBorrowedBooks().containsKey(b.getISBN())) {
+
+    	                    borrowerInfo = "Borrowed by: " + m.getName() +
+    	                                   " (ID: " + m.getId() + ")";
+    	                    break;
+    	                }
+    	            }
+    	        }
+
     	        System.out.println("ISBN: " + b.getISBN() +
     	                " | Title: " + b.getTittle() +
     	                " | Author: " + b.getAuthor() +
-    	                " | Available: " + b.isAvailaable());
+    	                " | Status: " + borrowerInfo);
     	    }
     	}
      
