@@ -17,6 +17,30 @@ public class FileHandler {
 			System.out.println("Error saving Book..!");
 		}	
 	}
+	public static void exportBooksToCSV(ArrayList<Book> books) {
+
+	    try (BufferedWriter writer = new BufferedWriter(new FileWriter("books.csv"))) {
+
+	        // ✅ Header row
+	        writer.write("ISBN,Title,Author,Available");
+	        writer.newLine();
+
+	        // ✅ Data rows
+	        for (Book b : books) {
+	            writer.write(b.getISBN() + "," +
+	                         b.getTittle() + "," +
+	                         b.getAuthor() + "," +
+	                         b.isAvailaable());
+	            writer.newLine();
+	        }
+
+	        System.out.println("📊 Data exported to books.csv successfully!");
+
+	    } catch (IOException e) {
+	        System.out.println("❌ Error exporting CSV!");
+	        e.printStackTrace();
+	    }
+	}
 	public static ArrayList<Book>loadBooks(){
 		ArrayList<Book>books =new ArrayList<>();
 		try(BufferedReader reader=new BufferedReader(new FileReader("books.txt"))){

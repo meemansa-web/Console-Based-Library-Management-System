@@ -1,6 +1,8 @@
 package Default;
 
 import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class Library {
      private ArrayList<Book>books = new ArrayList<>();
@@ -74,14 +76,39 @@ public class Library {
      }
      
      //Return Book
-     public void returnBook(String isbn, String memberId) {
+       public void returnBook(String isbn, String memberId) {
          Book book = findBook(isbn);
          Member member = findMember(memberId);
 
-         if (book != null && member != null) {
-             book.setAvailaable(true);
-             member.returnBook(isbn);
+         if (book == null || member == null) {
+             System.out.println("Invalid Book or Member!");
+             return;
+         }
+
+         LocalDate borrowDate = member.returnBook(isbn);
+
+         if (borrowDate == null) {
+             System.out.println("This book was not borrowed by the member!");
+             return;
+         }
+
+         book.setAvailaable(true);
+
+         // ✅ Calculate days
+         long days = ChronoUnit.DAYS.between(borrowDate, LocalDate.now());
+
+         int allowedDays = 7;
+         int finePerDay = 5;
+
+         if (days > allowedDays) {
+             long extraDays = days - allowedDays;
+             long fine = extraDays * finePerDay;
+
              System.out.println("Book returned!");
+             System.out.println("⚠ Overdue by " + extraDays + " days");
+             System.out.println("💰 Fine: ₹" + fine);
+         } else {
+             System.out.println("Book returned on time. No fine.");
          }
      }
      
@@ -99,4 +126,27 @@ public class Library {
     	                " | Available: " + b.isAvailaable());
     	    }
     	}
+     
+     //Library Statistics
+     public void showStatistics() {
+
+    	    int totalBooks = books.size();
+    	    int availableBooks = 0;
+    	    int borrowedBooks = 0;
+
+    	    for (Book b : books) {
+    	        if (b.isAvailaable()) {
+    	            availableBooks++;
+    	        } else {
+    	            borrowedBooks++;
+    	        }
+    	    }
+
+    	    System.out.println("\n===== 📊 Library Statistics =====");
+    	    System.out.println("Total Books     : " + totalBooks);
+    	    System.out.println("Available Books : " + availableBooks);
+    	    System.out.println("Borrowed Books  : " + borrowedBooks);
+    	    System.out.println("Total Members   : " + members.size());
+    	}
+     
      }

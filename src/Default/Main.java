@@ -1,6 +1,7 @@
 package Default;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main {
@@ -17,6 +18,8 @@ public class Main {
     		System.out.println("4. Return Book");
     		System.out.println("5. Display Book");
     		System.out.println("6. Remove Book");
+    		System.out.println("7. Show Statistics");
+    		System.out.println("9. Export Books to CSV");
     		System.out.println("0. Exit");
     		
     		System.out.println("Enter your choice :");
@@ -40,11 +43,10 @@ public class Main {
     		case 2:
     			 System.out.print("Member ID: ");
                  String id = sc.nextLine();
-
                  System.out.print("Name: ");
                  String name = sc.nextLine();
 
-                 library.addMember(new Member(id, name, new ArrayList<>()));
+                 library.addMember(new Member(id, name));
                  
                  break;
                  
@@ -76,6 +78,12 @@ public class Main {
 
     			    library.removeBook(removeIsbn);
     			    FileHandler.saveBooks(library.getBooks());
+    			    break;
+    		 case 7:
+    			    library.showStatistics();
+    			    break;
+    		 case 8:
+    			    FileHandler.exportBooksToCSV(library.getBooks());
     			    break;
              case 0:
             	 FileHandler.saveBooks(library.getBooks());

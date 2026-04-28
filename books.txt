@@ -1,2 +1,2 @@
-102, C++, Bjenae, true
-101, Java, James, true
+101, Java Basic, James, true
+102, C++, Bjarne, true

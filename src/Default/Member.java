@@ -1,50 +1,39 @@
 package Default;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.util.HashMap;
 
 public class Member {
-      private String id;
-      private String name;
-      private ArrayList<String>borrowedBook;
-	  public Member() {
-		super();
-		// TODO Auto-generated constructor stub
-	  }
-	  public Member(String id, String name, ArrayList<String> borrowedBook) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.borrowedBook = borrowedBook;
-	  }
-	  public String getId() {
-		  return id;
-	  }
-	  public void setId(String id) {
-		  this.id = id;
-	  }
-	  public String getName() {
-		  return name;
-	  }
-	  public void setName(String name) {
-		  this.name = name;
-	  }
-	  public ArrayList<String> getBorrowedBook() {
-		  return borrowedBook;
-	  }
-	  public void setBorrowedBook(ArrayList<String> borrowedBook) {
-		  this.borrowedBook = borrowedBook;
-	  }
-	  public void borrowBook(String ISBN) {
-		  borrowedBook.add(ISBN);
-	  }
-	  public void returnBook(String ISBN) {
-		  borrowedBook.remove(ISBN);
-	  }
-	  @Override
-	  public String toString() {
-		return "Member [id=" + id + ", name=" + name + ", borrowedBook=" + borrowedBook + "]";
-	  }
-      
-      
-      
+
+    private String memberId;
+    private String name;
+    private HashMap<String, LocalDate> borrowedBooks;
+
+    public Member(String memberId, String name) {
+        this.memberId = memberId;
+        this.name = name;
+        this.borrowedBooks = new HashMap<>();
+    }
+
+    public String getId() {
+        return memberId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public HashMap<String, LocalDate> getBorrowedBooks() {
+        return borrowedBooks;
+    }
+
+    // ✅ Borrow book with date
+    public void borrowBook(String isbn) {
+        borrowedBooks.put(isbn, LocalDate.now());
+    }
+
+    // ✅ Return book
+    public LocalDate returnBook(String isbn) {
+        return borrowedBooks.remove(isbn);
+    }
 }
