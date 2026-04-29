@@ -66,21 +66,29 @@ public class Library {
      }
      
      // Borrow Book
-     public void borrowBook(String ISBN,String id) {
-    	 Book book=findBook(ISBN);
-    	 Member member =findMember(id);
-    	 if(book == null || member == null) {
-    		 System.out.println("Invalid Book and Member");
-    		 return;
-    	 }
-    	 if(!book.isAvailaable()) {
-    		 System.out.println("Book already borrowed");
-    		 return;
-    	 }
-    	 book.setAvailaable(false);
-    	 member.borrowBook(ISBN);
-    	 System.out.println("Book borrowed Sucessfully");
-     }
+     public void borrowBook(String ISBN, String id) {
+
+    	    Book book = findBook(ISBN);
+    	    Member member = findMember(id);
+
+    	    if (book == null || member == null) {
+    	        System.out.println("Invalid Book or Member");
+    	        return;
+    	    }
+
+    	    if (!book.isAvailaable()) {
+    	        System.out.println("Book already borrowed");
+    	        return;
+    	    }
+
+    	    book.setAvailaable(false);
+    	    member.borrowBook(ISBN);
+
+    	    System.out.println("Book borrowed successfully");
+
+    	    // ✅ SAVE immediately
+    	    FileHandler.saveBooks(books);
+    	}
      
      //Return Book
        public void returnBook(String isbn, String memberId) {

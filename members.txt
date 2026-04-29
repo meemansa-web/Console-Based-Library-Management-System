@@ -1,2 +1,1 @@
-M1,Meemansa
-M2,Manu
+M1,Manu
